@@ -1,0 +1,144 @@
+# Copyright 2009-2015 Rocketgenius, Inc.
+msgid ""
+msgstr ""
+"Project-Id-Version: Gravity Forms HipChat Add-On 1.0\n"
+"Report-Msgid-Bugs-To: http://www.gravtiyhelp.com\n"
+"POT-Creation-Date: 2015-05-04 20:42:07+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Rocketgenius <customerservice@rocketgenius.com>\n"
+"Language-Team: Rocketgenius <customerservice@rocketgenius.com>\n"
+"X-Generator: Gravity Forms Build Server\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Project-Id-Version: gravityformshipchat\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Textdomain-Support: yes\n"
+
+#: class-gf-hipchat.php:47
+msgid "Authentication Token"
+msgstr ""
+
+#: class-gf-hipchat.php:55
+msgid "HipChat settings have been updated."
+msgstr ""
+
+#: class-gf-hipchat.php:69
+msgid ""
+"HipChat provides simple group and private chat for your team and your "
+"customers. Use Gravity Forms to alert your HipChat rooms of a new form "
+"submission. If you don't have a HipChat account, you can %1$s sign up for "
+"one here.%2$s"
+msgstr ""
+
+#: class-gf-hipchat.php:78
+msgid ""
+"Gravity Forms HipChat Add-On requires an API token %1$screated by the group "
+"admin.%2$s The API token type must be set to admin."
+msgstr ""
+
+#: class-gf-hipchat.php:98 class-gf-hipchat.php:102
+msgid "Name"
+msgstr ""
+
+#: class-gf-hipchat.php:102
+msgid "Enter a feed name to uniquely identify this setup."
+msgstr ""
+
+#: class-gf-hipchat.php:106 class-gf-hipchat.php:110
+msgid "HipChat Room"
+msgstr ""
+
+#: class-gf-hipchat.php:110
+msgid "Select which HipChat Room this feed will post a notification to."
+msgstr ""
+
+#: class-gf-hipchat.php:114 class-gf-hipchat.php:117
+msgid "Notification Color"
+msgstr ""
+
+#: class-gf-hipchat.php:117
+msgid "Select which color the notification will be displayed as."
+msgstr ""
+
+#: class-gf-hipchat.php:121 class-gf-hipchat.php:129
+msgid "Send User Notification"
+msgstr ""
+
+#: class-gf-hipchat.php:129
+msgid ""
+"Choose whether users in the room will be notified (change the tab color, "
+"play a sound, etc) when the message is posted."
+msgstr ""
+
+#: class-gf-hipchat.php:133 class-gf-hipchat.php:137
+msgid "Message"
+msgstr ""
+
+#: class-gf-hipchat.php:137
+msgid ""
+"Enter the message that will be posted to the room. Maximum message length: "
+"10,000 characters."
+msgstr ""
+
+#: class-gf-hipchat.php:142 class-gf-hipchat.php:146
+msgid "Conditional Logic"
+msgstr ""
+
+#: class-gf-hipchat.php:144
+msgid "Enable"
+msgstr ""
+
+#: class-gf-hipchat.php:145
+msgid "Post to HipChat if"
+msgstr ""
+
+#: class-gf-hipchat.php:146
+msgid ""
+"When conditional logic is enabled, form submissions will only be posted to "
+"HipChat when the condition is met. When disabled, all form submissions will "
+"be posted."
+msgstr ""
+
+#: class-gf-hipchat.php:216
+msgid "%s Feeds"
+msgstr ""
+
+#: class-gf-hipchat.php:238
+msgid "%s Settings"
+msgstr ""
+
+#: class-gf-hipchat.php:241
+msgid "To get started, please configure your %s."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Gravity Forms HipChat Add-On"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.gravityforms.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Integrates Gravity Forms with HipChat allowing alerts for Gravity Forms "
+"activity to be posted to your HipChat rooms."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "rocketgenius"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.rocketgenius.com"
+msgstr ""
