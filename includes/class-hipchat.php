@@ -4,9 +4,10 @@
 		
 		protected $api_url = 'https://api.hipchat.com/v1/';
 		
-		function __construct( $oauth_token ) {
+		function __construct( $oauth_token, $verify_ssl = true ) {
 			
 			$this->oauth_token = $oauth_token;
+			$this->verify_ssl = $verify_ssl;
 			
 		}
 
@@ -20,7 +21,7 @@
 		 * @param string $method (default: 'GET')
 		 * @return void
 		 */
-		function make_request( $path, $options = array(), $method = 'GET' ) {
+		function make_request( $path, $options = array(), $method = 'GET', $return_key = null ) {
 			
 			/* Build base request options string. */
 			$request_options = '?format=json&auth_token='. $this->oauth_token;
@@ -30,46 +31,40 @@
 			
 			/* Build request URL. */
 			$request_url = $this->api_url . $path . $request_options;
-						
-			/* Initialize cURL session. */
-			$curl = curl_init();
 			
-			/* Setup cURL options. */
-			curl_setopt( $curl, CURLOPT_URL, $request_url );
-			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+			/* Setup request arguments. */
+			$args = array(
+				'method'    => $method,
+				'sslverify' => $this->verify_ssl	
+			);
 			
-			/* If this is a POST request, pass the request options via cURL option. */
-			if ( $method == 'POST' ) {
-				
-				curl_setopt( $curl, CURLOPT_POST, true );
-				curl_setopt( $curl, CURLOPT_POSTFIELDS, $options );
-				
+			/* Add request options to body of POST and PUT requests. */
+			if ( $method == 'POST' || $method == 'PUT' ) {
+				$args['body'] = $options;
+			}
+			
+			/* Execute request. */
+			$result = wp_remote_request( $request_url, $args );
+			
+			/* If WP_Error, throw exception */
+			if ( is_wp_error( $result ) ) {
+				throw new Exception( 'Request failed. '. $result->get_error_messages() );
 			}
 
-			/* If this is a PUT request, pass the request options via cURL option. */
-			if ( $method == 'PUT' ) {
-				
-				curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, 'PUT' );
-				curl_setopt( $curl, CURLOPT_POSTFIELDS, $request_options );
-				
+			/* Decode JSON. */
+			$decoded_result = json_decode( $result['body'], true );
+			
+			/* If invalid JSON, return original result body. */
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				return $result['body'];
 			}
 			
-			/* Execute cURL request. */
-			$curl_result = curl_exec( $curl );
-			
-			/* If there is an error, die with error message. */
-			if ( $curl_result === false ) {
-				
-				die( 'cURL error: '. curl_error( $curl ) );
-				
+			/* If return key is set and exists, return array item. */
+			if ( $return_key && array_key_exists( $return_key, $decoded_result ) ) {
+				return $decoded_result[ $return_key ];
 			}
 			
-			/* Close cURL session. */
-			curl_close( $curl );
-			
-			/* Attempt to decode JSON. If isn't JSON, return raw cURL result. */
-			$json_result = json_decode( $curl_result, true );		
-			return ( json_last_error() == JSON_ERROR_NONE ) ? $json_result : $curl_result;
+			return $decoded_result;
 			
 		}
 
@@ -79,20 +74,9 @@
 		 * @access public
 		 * @return bool
 		 */
-		function auth_test() {
-			
+		public function auth_test() {
 			$auth_test_request = $this->make_request( 'rooms/list', array( 'auth_test' => 'true' ) );
-			
-			if ( isset( $auth_test_request['success'] ) ) {
-				
-				return true;
-				
-			} else {
-				
-				return false;
-				
-			}
-			
+			return isset( $auth_test_request['success'] );
 		}
 		
 		/**
@@ -102,11 +86,8 @@
 		 * @param mixed $room
 		 * @return void
 		 */
-		function get_room( $room ) {
-			
-			$request = $this->make_request( 'rooms/show', array( 'room_id' => $room ) );
-			return isset( $request['room'] ) ? $request['room'] : $request;
-			
+		public function get_room( $room ) {
+			return $this->make_request( 'rooms/show', array( 'room_id' => $room ), 'GET', 'room' );
 		}
 		
 		/**
@@ -115,24 +96,19 @@
 		 * @access public
 		 * @return array
 		 */
-		function get_rooms() {
-			
-			$request = $this->make_request( 'rooms/list' );
-			return $request['rooms'];
-			
+		public function get_rooms() {
+			return $this->make_request( 'rooms/list', array(), 'GET', 'rooms' );
 		}
 		
 		/**
 		 * Send room notification.
 		 * 
 		 * @access public
-		 * @param array $params (default: array())
+		 * @param array $notification (default: array())
 		 * @return void
 		 */
-		function notify_room( $params = array() ) {
-			
-			return $this->make_request( 'rooms/message', $params, 'POST' );
-			
+		public function notify_room( $notification = array() ) {
+			return $this->make_request( 'rooms/message', $notification, 'POST' );
 		}
 		
 	}
