@@ -1,4 +1,9 @@
 <?php
+
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
 	
 GFForms::include_feed_addon_framework();
 
